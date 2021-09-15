@@ -56,3 +56,12 @@ export const login = async (req, res) => {
 		return res.status(400).send("Error. Try again -_-");
 	}
 };
+
+export const logout = (req, res) => {
+	try {
+		res.clearCookie("token");
+		return res.json({ message: "Вы вышли из личного кабинета" });
+	} catch (err) {
+		console.log(err);
+	}
+}

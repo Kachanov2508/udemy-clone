@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-
 import { toast } from "react-toastify";
 import { SyncOutlined } from "@ant-design/icons";
+import { Button } from 'antd';
 import Link from "next/link";
+import router from "next/router";
+import { Context } from "../context";
 
 const Register = () => {
 	const [name, setName] = useState("Евгений");
 	const [email, setEmail] = useState("kachanov2508@yandex.ru");
 	const [password, setPassword] = useState("Password123");
 	const [loading, setLoading] = useState(false);
+
+	const { state } = useContext(Context);
+
+	useEffect(() => {
+		if(state.user !== null) router.push("/");
+	}, [state.user])
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -42,6 +50,9 @@ const Register = () => {
 					<button type="submit" className="btn btn-primary btn-block" disabled={!name || !email || !password || loading}>
 						{loading ? <SyncOutlined spin /> : "Регистрация"}
 					</button>
+					<br />
+					{/* <Button type="primary" block onClick={handleSubmit}>submit</Button> */}
+					<Button type="primary" block disabled={!name || !email || !password || loading} onClick={handleSubmit}>Регистрация</Button>
 				</form>
 
 				<p className="text-center p-3">
